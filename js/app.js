@@ -10,14 +10,15 @@ const BLOCK_WIDTH = 101;
 const MIN_SPEED = 100;
 const MAX_SPEED = 400;
 
-var Enemy = function (x, y) {
+var Enemy = function (x, y, user) {
   this.x = x;
   this.y = y;
+  this.user = user;
   this.speed = this.randomInteger();
   this.sprite = "images/enemy-bug.png";
 };
 
-Enemy.prototype.update = function (dt, gamer) {
+Enemy.prototype.update = function (dt) {
   this.x += this.speed * dt;
 
   if (this.x > 500) {
@@ -26,12 +27,12 @@ Enemy.prototype.update = function (dt, gamer) {
   }
 
   if (
-    gamer.y < this.y + 50 &&
-    gamer.y + 50 > this.y &&
-    gamer.x < this.x + 75 &&
-    gamer.x + 75 > this.x
+    this.user.y < this.y + 50 &&
+    this.user.y + 50 > this.y &&
+    this.user.x < this.x + 75 &&
+    this.user.x + 75 > this.x
   ) {
-    gamer.initialPositionPlayer();
+    this.user.initialPositionPlayer();
   }
 };
 
@@ -43,21 +44,27 @@ Enemy.prototype.render = function () {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-const enemyOne = new Enemy(POSITION_ENEMIES_X, POSITION_ENEMY_ONE_Y);
-const enemyTwo = new Enemy(POSITION_ENEMIES_X, POSITION_ENEMY_TWO_Y);
-const enemyThree = new Enemy(POSITION_ENEMIES_X, POSITION_ENEMY_THREE_Y);
-
-const allEnemies = [enemyOne, enemyTwo, enemyThree];
-
 var Player = function (x, y) {
   this.x = x;
   this.y = y;
   this.sprite = "images/char-boy.png";
 };
 
+const player = new Player(POSITION_PLAYER_X, POSITION_PLAYER_Y);
+
+const enemyPositionY = [
+  POSITION_ENEMY_ONE_Y,
+  POSITION_ENEMY_TWO_Y,
+  POSITION_ENEMY_THREE_Y,
+];
+
+const allEnemies = enemyPositionY.map(
+  (positionY) => new Enemy(POSITION_ENEMIES_X, positionY, player)
+);
+
 Player.prototype.initialPositionPlayer = function () {
-  player.x = POSITION_PLAYER_X;
-  player.y = POSITION_PLAYER_Y;
+  this.x = POSITION_PLAYER_X;
+  this.y = POSITION_PLAYER_Y;
 };
 
 Player.prototype.update = function (dt) {
@@ -93,8 +100,6 @@ Player.prototype.handleInput = function (keyPressed) {
     }, 500);
   }
 };
-
-const player = new Player(POSITION_PLAYER_X, POSITION_PLAYER_Y);
 
 document.addEventListener("keyup", function (e) {
   var allowedKeys = {
