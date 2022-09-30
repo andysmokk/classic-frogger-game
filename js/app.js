@@ -2,9 +2,9 @@
 const POSITION_PLAYER_X = 203;
 const POSITION_PLAYER_Y = 390;
 const POSITION_ENEMIES_X = -200;
-const POSITION_ENEMY_ONE_Y = 62;
-const POSITION_ENEMY_TWO_Y = 145;
-const POSITION_ENEMY_THREE_Y = 228;
+// const POSITION_ENEMY_ONE_Y = 62;
+// const POSITION_ENEMY_TWO_Y = 145;
+// const POSITION_ENEMY_THREE_Y = 228;
 const BLOCK_HEIGHT = 83;
 const BLOCK_WIDTH = 101;
 const MIN_SPEED = 100;
@@ -52,12 +52,7 @@ var Player = function (x, y) {
 
 const player = new Player(POSITION_PLAYER_X, POSITION_PLAYER_Y);
 
-const enemyPositionY = [
-  POSITION_ENEMY_ONE_Y,
-  POSITION_ENEMY_TWO_Y,
-  POSITION_ENEMY_THREE_Y,
-];
-
+const enemyPositionY = [62, 145, 228];
 const allEnemies = enemyPositionY.map(
   (positionY) => new Enemy(POSITION_ENEMIES_X, positionY, player)
 );
