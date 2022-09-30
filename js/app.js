@@ -49,8 +49,8 @@ var Player = function (x, y) {
 
 const player = new Player(POSITION_PLAYER_X, POSITION_PLAYER_Y);
 
-const enemyPositionY = [62, 145, 228];
-const allEnemies = enemyPositionY.map(
+const enemyPositionsY = [62, 145, 228];
+const allEnemies = enemyPositionsY.map(
   (positionY) => new Enemy(POSITION_ENEMIES_X, positionY, player)
 );
 
